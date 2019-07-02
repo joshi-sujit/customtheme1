@@ -17,6 +17,17 @@ function sj2_load_stylesheet()
 
 add_action('login_enqueue_scripts', 'sj2_load_stylesheet');
 
+add_action('login_enqueue_scripts', 'sj2_display_filename', 11);
+function sj2_display_filename()
+{
+    echo __FILE__;
+    echo "<br>";
+    echo plugin_dir_url(__FILE__);
+    echo "<br>";
+    echo dirname(__FILE__);
+}
+
+
 /*Modify Login Error Message*/
 add_filter('login_errors', 'sj2_change_login_msg');
 
