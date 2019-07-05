@@ -20,11 +20,15 @@ add_action('login_enqueue_scripts', 'sj2_load_stylesheet');
 add_action('login_enqueue_scripts', 'sj2_display_filename', 11);
 function sj2_display_filename()
 {
-    echo __FILE__;
+    echo __FILE__; //C:\wamp\www\sujit\customtheme\wp-content\plugins\Sujit-plug2\sujit-plug2.php
     echo "<br>";
-    echo plugin_dir_url(__FILE__);
+    echo plugin_dir_url(__FILE__); //http://customtheme.test/wp-content/plugins/Sujit-plug2/
     echo "<br>";
-    echo dirname(__FILE__);
+    echo dirname(__FILE__); //C:\wamp\www\sujit\customtheme\wp-content\plugins\Sujit-plug2
+    echo "<br>";
+    echo ABSPATH; //C:\wamp\www\sujit\customtheme/
+    echo "<br>";
+    echo __DIR__;
 }
 
 
