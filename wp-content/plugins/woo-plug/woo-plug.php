@@ -25,10 +25,21 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             {
                 // Print admin notice to the screen
                 //add_action('admin_notices', array($this, 'my_admin_notice'));
-
+                add_action('wp_enqueue_scripts', array($this, 'wco_add_stylesheet'), 11);
                 add_filter('woocommerce_settings_tabs_array', array($this, 'add_settings_tab'), 50);
                 add_action('woocommerce_settings_opening_hours', array($this, 'add_settings'), 50);
                 add_action('woocommerce_update_options_opening_hours', array($this, 'update_settings'), 50);
+                add_action('wp', array($this, 'check_opening_hours'), 50);
+            }
+
+            /**
+             * Add Stylesheet
+             */
+            public function wco_add_stylesheet()
+            {
+
+                wp_register_style('woo_plug_style', plugin_dir_url(__FILE__) . 'style.css');
+                wp_enqueue_style('woo_plug_style');
             }
 
             /**
@@ -78,6 +89,18 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             {
                 woocommerce_update_options(self::get_settings());
             }
+
+            /**
+             * Check for the Opening Hours based on Saturdays
+             */
+            public function check_opening_hours()
+            {
+                $opening_option = get_option('wc_settings_closed_saturdays') == 'yes' ? true : false;
+                if ($opening_option) {
+                    echo '<p class="custom-notice">' . get_option('wc_settings_custom_notice') . '</p>' . get_option('wc_settings_closed_saturdays');
+                }
+            }
+
 
             /**
              * 1. Add settings Tabs
