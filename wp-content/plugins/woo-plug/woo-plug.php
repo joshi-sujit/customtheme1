@@ -28,6 +28,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
                 add_filter('woocommerce_settings_tabs_array', array($this, 'add_settings_tab'), 50);
                 add_action('woocommerce_settings_opening_hours', array($this, 'add_settings'), 50);
+                add_action('woocommerce_update_options_opening_hours', array($this, 'update_settings'), 50);
             }
 
             /**
@@ -56,12 +57,26 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         'desc'  => __('Disable the checkout on Saturdays', 'woocommerce-opening-hours'),
                         'id'    => 'wc_settings_closed_saturdays'
                     ),
+                    'custom_notice' => array(
+                        'name'  => __('Custom Notice', 'woocommerce-opening-hours'),
+                        'type'  => 'text',
+                        'placeholder'  => __('Add a custom notice', 'woocommerce-opening-hours'),
+                        'id'    => 'wc_settings_custom_notice'
+                    ),
                     'section_end' => array(
                         'type'  => 'sectionend',
                         'id'    => 'wc_settings_opening_hours_section_end'
                     )
                 );
                 return $settings;
+            }
+
+            /**
+             * 4. Update Settings
+             */
+            public function update_settings()
+            {
+                woocommerce_update_options(self::get_settings());
             }
 
             /**
@@ -73,20 +88,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
                 return $settings_tab;
             }
-
-
-            /**
-             * Print notice
-             */
-            public function my_admin_notice()
-            { ?>
-            <div class="notice notice-success is-dismissible">
-                <p><?php _e('Woocommerce First Plugin Loaded!', 'sample-text-domain'); ?></p>
-            </div>
-        <?php
         }
-    }
 
-    $GLOBALS['wco_plug'] = new WCO_Plug();
-}
+        $GLOBALS['wco_plug'] = new WCO_Plug();
+    }
 }
