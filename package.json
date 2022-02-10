@@ -17,6 +17,6 @@
     "url": "https://github.com/joshi-sujit/customtheme1/issues"
   },
   "dependencies": {
-    "node-sass": "^4.11.0"
+    "node-sass": "^7.0.0"
   }
 }
